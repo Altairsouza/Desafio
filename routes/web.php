@@ -26,20 +26,22 @@ Route::get('/logout', [Main::class, 'logout'])->name('logout');
 
 Route::get('/novo_usuario', [Main::class, 'novo_usuario'])->name('novo_usuario');
 Route::post('/novo_usuario', [Main::class, 'novo_cadastro'])->name('novo_cadastro');
-
-
-
 Route::get('/editar_membro/{id_usuario}', [Main::class, 'editar_membro'])->name('editar_membro');
 Route::post('/edite', [Main::class, 'edite'])->name('edite')->middleware('auth');
-
-
-
 Route::get('/deletar/{id_usuario}', [Main::class, 'deletar'])->name('deletar');
 
 
 
-Route::get('/telefone', [Main::class, 'telefone'])->name('telefone');
+
+
+
+Route::get('/telefone_lista', [Main::class, 'telefone'])->name('telefone');
 Route::get('/deletar_telefone/{id_telefone}', [Main::class, 'delete_telefone'])->name('deletar_telefone');
+
+Route::get('/endereco_lista', [Main::class, 'endereco'])->name('endereco');
+
+
+
 
 
 

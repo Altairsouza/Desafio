@@ -25,16 +25,19 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>Nome</th>
-                        <th class="text-end">Acões</th>
+                        <th >Acões</th>
+                        <th >Telefone</th>
+                        <th >Endereço</th>
                     </tr>
                 </thead>
             <tbody>
         @foreach ($membros as $membro )
         <tr>
             <td>{{$membro->nome}}</td>
-            <td class="text-end"><a  href="{{route('editar_membro', ['id_usuario'=>$membro->id])}}">EDITAR</a> </td>
-            <td ><a  href="{{route('deletar', ['id_usuario'=>$membro->id])}}">DELETAR</a> </td>
-            <td ><a  href="{{route('telefone')}}">telefone</a> </td>
+            <td ><a  href="{{route('editar_membro', ['id_usuario'=>$membro->id])}}">EDITAR</a> 
+             ><a  href="{{route('deletar', ['id_usuario'=>$membro->id])}}">DELETAR</a> </td>
+            <td ><a  href="{{route('telefone', )}}">telefone</a> </td>
+            <td ><a  href="{{route('endereco', )}}">endereco</a> </td>
 
         </tr>
         @endforeach

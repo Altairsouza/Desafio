@@ -208,9 +208,12 @@ class Main extends Controller
     public function deletar($id)
     {
        $delete = Membro::find($id);
-       $delete->delete();
-        return  redirect()->route('home');
-    }
+
+            $delete->delete();
+            return  redirect()->route('telefone');
+       }
+
+    
 
     public function telefone()
     {
@@ -221,6 +224,36 @@ class Main extends Controller
 
     }
 
+
+
+    public function endereco()
+    {
+        $enderecos = Membro::find(1)->enderecos;
+
+        return view('lista_endereco', ['enderecos' => $enderecos]);
+    }
+
+    public function novo_telefone()
+    {
+
+       return view('novo_telefone');
+    }
+
+    public function telefone_novo(Request $request)
+    {
+        $membro = Membro::find(1);
+
+        $telefone = $request->input('telefone');
+
+        $fone = new Telefone();
+        $fone->telefone = $telefone;
+        $fone->membro_id = $membro;
+        $fone->save();
+        return view('novo_telefone');
+    }
+
+
+
     public function delete_telefone($id)
     {
         $delete = Telefone::find($id);
@@ -228,6 +261,11 @@ class Main extends Controller
         return  redirect()->route('telefone');
     }
 
+    public function editar_telefone($id)
+    {
+        $telefones = Telefone::find($id);
+        return view('editar_telefone', ['telefones' => $telefones]);
+    }
     }
 
 

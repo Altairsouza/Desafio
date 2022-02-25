@@ -17,6 +17,6 @@ class Telefone extends Model
     public function membro() {
 
 
-   return $this->belongsTo('App\Models\Membro');
+   return $this->belongsTo('App\Models\Membro', 'membro_id','id');
     }
 }
