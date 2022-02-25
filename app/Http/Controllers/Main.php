@@ -6,7 +6,9 @@ use App\Classes\Enc;
 use App\Classes\Logger;
 use App\Http\Requests\LoginRequest;
 use App\Models\Usuario;
+use App\Models\Membro;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
 
 class Main extends Controller
@@ -73,48 +75,48 @@ class Main extends Controller
             return redirect()->route('index');
         }
 
-
+        //validacao
         $request->validated();
 
-
-        $usuario = trim($request->input('text_usuario'));
+        //verificar dados de login
+        $usuario = trim($request->input('text_usuario')); // trim serve pra remover espaços em branco do inico ao fim
         $senha = trim($request->input('text_senha'));
 
         $usuario =  Usuario::where('usuario', $usuario)->first();
 
-
+        // VERIFICA SE EXISTE O USUARIO
         if (!$usuario) {
 
-            $this->Logger->log('error',trim($request->input('text_usuario')). ' - Não existe o usuário indicado.');
+            $this->Logger->log('error', trim($request->input('text_usuario')) . ' - Não existe o usuário indicado.');
 
 
-            session()->flash('erro', ['Não existe o usuário', ]);
+            session()->flash('erro', ['Não existe o usuário', 'segundo erro!!!']); // o fash é um metodo q só vai ser usada uma vez por sessao
             return redirect()->route('login');
         }
 
 
+        //verificar se a senha está correnta
+        if (!Hash::check($senha, $usuario->senha)) { // o value vai mostrar a senha original e o usuario->senha e a senha
+            //criptografada dai eles vao ver se é a msm senha
 
-        if (!Hash::check($senha, $usuario->senha)) {
 
+            //Logger
+            $this->Logger->log('error', trim($request->input('text_usuario')) . ' - Senha inválida.');
 
-
-            $this->Logger->log('error',trim($request->input('text_usuario')). ' - Senha inválida.');
-
-            session()->flash('erro', ['Senha inválida.']);
+            session()->flash('erro', ['Senha inválida.']); // o fash é um metodo q só vai ser usada uma vez por sessao
             return redirect()->route('login');
         }
-
-        session()->put('usuario', $usuario);
-
-
+        //criar a sessao (se login ok)
+        session()->put('usuario', $usuario); // esse usuario ta sendo pego do index e variavel do objeto
 
 
-       //logger
-       $this->Logger->log('info', 'fez o seu login');
 
-        return redirect()->route('login');
+
+        //logger
+        $this->Logger->log('info', 'fez o seu login');
+
+        return redirect()->route('home');
     }
-
 
     //===============================================================
     public function logout()
@@ -139,7 +141,7 @@ class Main extends Controller
         }
 
         $data = [
-            'usuarios' => Usuario::all()
+            'membros' => Membro::all()
         ];
 
 
@@ -147,7 +149,71 @@ class Main extends Controller
         return view('home', $data);
     }
 
-}
+
+    //====================================================
+    // USUARIOS
+
+    public function novo_usuario()
+    {
+
+        // display new task form
+        return view('novo_membro');
+    }
+
+    public function novo_cadastro(Request $request){
+
+
+        $nome = $request->input('nome');
+        $cpf = $request->input('cpf');
+        $dataNascimento = $request->input('nascimento');
+
+        $membro = new Membro();
+        $membro->nome = $nome;
+        $membro->cpf = $cpf;
+        $membro->dataNascimento = $dataNascimento;
+
+        $membro->save();
+
+        return  redirect()->route('home');
+    }
+
+
+    public function editar_membro($id_usuario)
+    {
+        $membro = Membro::find($id_usuario);
+        return view('editar_membro',['membro'=>$membro]);
+
+    }
+
+    public function edite(Request $request)
+    {
+
+        $id = $request->input('id');
+        $nome = $request->input('nome');
+        $cpf = $request->input('cpf');
+        $dataNascimento = $request->input('nascimento');
+
+        $membro =  Membro::find($id);
+        $membro->nome = $nome;
+        $membro->cpf = $cpf;
+        $membro->dataNascimento = $dataNascimento;
+
+        $membro->save();
+
+        return  redirect()->route('home');
+    }
+
+
+    public function deletar($id)
+    {
+       $delete = Membro::find($id);
+       $delete->delete();
+        return  redirect()->route('home');
+    }
+
+    }
+
+
 
 
 

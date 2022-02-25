@@ -1,26 +1,46 @@
 @extends('layouts.app_layout')
 
 
-@php
-    use App\Classes\Enc; // as duas formas de usar
-        $enc = new App\Classes\Enc();
-@endphp
-
 
 
 @section('conteudo')
-    <div>
-        <h3>
-           LISTA DE USUÁRIOS
+<div class="container-fluid">
+ <div class="row">
+     <div class="col">
+         <h3>
+           LISTA DE MEMBROS
         </h3>
-        <hr>
-        <ul>
-        @foreach ($usuarios as $user )
-            <li><a href="{{route('main_edite', ['id_usuario'=>$enc->encriptar($user->id)])}}">EDIT</a> {{$user->usuario}}</li>
 
+            <div class="my-2">
+<a href="{{route('novo_usuario')}}" class="btn btn-primary text-center">Novo Membro</a>
+            </div>
+            <hr>
+
+
+            @if($membros->count() === 0)
+            <p>Nãp existem membros </p>
+
+            @else
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Nome</th>
+                        <th class="text-end">Acões</th>
+                    </tr>
+                </thead>
+            <tbody>
+        @foreach ($membros as $membro )
+        <tr>
+            <td>{{$membro->nome}}</td>
+            <td class="text-end"><a  href="{{route('editar_membro', ['id_usuario'=>$membro->id])}}">EDITAR</a> </td>
+            <td ><a  href="{{route('deletar', ['id_usuario'=>$membro->id])}}">DELETAR</a> </td>
+        </tr>
         @endforeach
-        </ul>
-
+    <tbody>
+        </table>
+        @endif
+    </div>
+        </div>
     </div>
 
 

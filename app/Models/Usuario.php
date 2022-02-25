@@ -9,5 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Usuario extends Model
 {
+    
     use SoftDeletes;
 }

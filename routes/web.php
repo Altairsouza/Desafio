@@ -24,8 +24,17 @@ Route::get('/logout', [Main::class, 'logout'])->name('logout');
 
 
 
+Route::get('/novo_usuario', [Main::class, 'novo_usuario'])->name('novo_usuario');
+Route::post('/novo_usuario', [Main::class, 'novo_cadastro'])->name('novo_cadastro');
 
-Route::get('/edite/{id_usuario}', [Main::class, 'edite'])->name('main_edite');
+
+
+Route::get('/editar_membro/{id_usuario}', [Main::class, 'editar_membro'])->name('editar_membro');
+Route::post('/edite', [Main::class, 'edite'])->name('edite');
+
+
+
+Route::get('/deletar/{id_usuario}', [Main::class, 'deletar'])->name('deletar');
 
 
 
