@@ -7,9 +7,10 @@ use App\Classes\Logger;
 use App\Http\Requests\LoginRequest;
 use App\Models\Usuario;
 use App\Models\Membro;
+use App\Models\Telefone;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-
+use PhpParser\Node\Stmt\Foreach_;
 
 class Main extends Controller
 {
@@ -209,6 +210,22 @@ class Main extends Controller
        $delete = Membro::find($id);
        $delete->delete();
         return  redirect()->route('home');
+    }
+
+    public function telefone()
+    {
+        $telefones = Membro::find(1)->telefones;
+
+        return view('lista_telefone', ['telefones' => $telefones]);
+
+
+    }
+
+    public function delete_telefone($id)
+    {
+        $delete = Telefone::find($id);
+        $delete->delete();
+        return  redirect()->route('telefone');
     }
 
     }

@@ -17,24 +17,24 @@
             <hr>
 
 
-            @if($membros->count() === 0)
-            <p>Nãp existem membros </p>
+            @if($telefones->count() === 0)
+            <p>Nãp existem telefone(s) </p>
 
             @else
             <table class="table table-striped">
                 <thead class="thead-dark">
                     <tr>
-                        <th>Nome</th>
+                        <th>telefone</th>
                         <th class="text-end">Acões</th>
                     </tr>
                 </thead>
             <tbody>
-        @foreach ($membros as $membro )
+        @foreach ($telefones as $telefone )
         <tr>
-            <td>{{$membro->nome}}</td>
-            <td class="text-end"><a  href="{{route('editar_membro', ['id_usuario'=>$membro->id])}}">EDITAR</a> </td>
-            <td ><a  href="{{route('deletar', ['id_usuario'=>$membro->id])}}">DELETAR</a> </td>
-            <td ><a  href="{{route('telefone')}}">telefone</a> </td>
+            <td>{{$telefone->telefone}}</td>
+            <td class="text-end"><a  href="{{-- {{route('editar_membro', ['id_usuario'=>$membro->id])}} --}}">EDITAR</a> </td>
+            <td ><a  href="{{route('deletar_telefone', ['id_telefone'=>$telefone->id])}}">DELETAR</a> </td>
+
 
         </tr>
         @endforeach
